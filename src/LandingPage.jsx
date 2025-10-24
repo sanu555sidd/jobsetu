@@ -4,6 +4,10 @@ import React, { useState, useEffect } from "react";
 import logos from "./assets/logos.png";
 import TestimonialsCarousel from "./testimonial";
 import './index.css';
+import FAQ from "./Faq";
+import ContactUs from "./Contact";
+import WhyChooseRojgarSetu from "./Banner";
+
 
 // --- Helper: Icon Components ---
 const SearchIcon = ({ className }) => (
@@ -165,11 +169,12 @@ const JobCategoriesSection = () => (
   </section>
 );
 
- <section className="py-16 bg-gray-100">
-        <TestimonialsCarousel />
-      </section>
-
-
+// --- Testimonials Section ---
+const TestimonialsSection = () => (
+  <section className="py-16 bg-gray-100">
+    <TestimonialsCarousel />
+  </section>
+);
 
 // --- Footer ---
 const Footer = () => (
@@ -203,8 +208,11 @@ export default function LandingPage() {
         <HeroSection />
         <HowItWorksSection />
         <JobCategoriesSection />
+        <WhyChooseRojgarSetu />
+        <TestimonialsSection />
+        <ContactUs />
+        <FAQ />
       </main>
-      <TestimonialsCarousel />
       <Footer />
     </div>
   );
