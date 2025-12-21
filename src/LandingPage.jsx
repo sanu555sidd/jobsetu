@@ -7,6 +7,9 @@ import './index.css';
 import FAQ from "./Faq";
 import ContactUs from "./Contact";
 import WhyChooseRojgarSetu from "./Banner";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 
 
 // --- Helper: Icon Components ---
@@ -68,15 +71,21 @@ const Loader = () => (
 );
 
 // --- Header Component ---
-const Header = () => (
+import { useLocation} from "react-router-dom";
+const Header = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const hideLogin = location.pathname === '/login';
+
+  return (
   <header className="bg-white/80 backdrop-blur-md fixed top-0 left-0 right-0 z-40 shadow-sm">
-    <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-      <div className="flex items-center space-x-2">
+    <div className="container mx-auto px-6 py-1 flex justify-between items-center">
+      <div className="flex items-center space-x-1">
           <img 
             src={logos}
             alt="JobSetu Logo" 
-            width={70} 
-            height={90} 
+            width={90} 
+            height={80} 
             className="rounded-md"
           />
           <span className="text-2xl font-bold text-blue-600">JobSetu</span>
@@ -85,39 +94,59 @@ const Header = () => (
       <nav className="hidden md:flex items-center space-x-8">
         <a href="#" className="text-gray-600 hover:text-blue-600">Find Jobs</a>
         <a href="#" className="text-gray-600 hover:text-blue-600">Post a Job</a>
-        <a href="#" className="text-gray-600 hover:text-blue-600">About Us</a>
+        {/* <a href="#" className="text-gray-600 hover:text-blue-600">Conatct Us</a> */}
+    <button onClick={() => document.getElementById("contact")?.scrollIntoView({
+      behavior: "smooth",
+       })
+        }
+      className="text-gray-600 hover:text-blue-600 cursor-pointer"
+        >
+        Contact Us
+        </button>
+        <button onClick={() => document.getElementById("faq")?.scrollIntoView({
+          behavior:"smooth",
+        })} 
+        className="text-gray-600 hover:text-blue-600 cursor-pointer"
+        >
+        FAQ
+        </button>
+
       </nav>
-      <button className="bg-blue-600 text-white px-5 py-2 rounded-full hover:bg-blue-700 transition">
-        Login / Sign Up
+      {!hideLogin && (
+      <button onClick={()=>navigate('/login')} className="bg-blue-600 text-white px-5 py-2 rounded-full hover:bg-blue-700 transition cursor-pointer">
+        Login
       </button>
+      )}
     </div>
   </header>
-);
-
+  );
+};
+export { Header };
 // --- Hero Section ---
-const HeroSection = () => (
-  <section className="bg-blue-50 pt-32 pb-20 text-center">
-    <div className="container mx-auto px-6">
-      <h1 className="text-4xl md:text-6xl font-extrabold text-gray-800 mb-4">
-        Your Bridge to a Better Job
-      </h1>
-      <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-        Connecting hardworking people with the right opportunities. Simple, fast, and reliable.
-      </p>
-      <div className="max-w-2xl mx-auto bg-white p-4 rounded-full shadow-lg flex items-center">
-        <SearchIcon className="h-6 w-6 text-gray-400 mx-3" />
-        <input
-          type="text"
-          placeholder="Search for jobs like 'Driver', 'Plumber'..."
-          className="w-full text-lg border-none focus:ring-0 outline-none"
-        />
-        <button className="bg-blue-600 text-white px-8 py-3 rounded-full hover:bg-blue-700 transition font-semibold">
-          Search
+
+const HeroSection = () => {
+  const navigate = useNavigate();
+
+  return (
+    <section className="bg-blue-50 pt-32 pb-20 text-center">
+      <div className="container mx-auto px-6">
+        <h1 className="text-4xl md:text-6xl font-extrabold text-gray-800 mb-4">
+          Your Bridge to a Better Job
+        </h1>
+
+        <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-12">
+          Connecting hardworking people with the right opportunities. Simple, fast, and reliable.
+        </p>
+        <button onClick={()=>navigate('/role')}className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg text-lg font-semibold transition cursor-pointer"
+>
+          Let's Start
         </button>
+       
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
+
 
 // --- How It Works Section ---
 const HowItWorksSection = () => (

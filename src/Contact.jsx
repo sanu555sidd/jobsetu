@@ -16,7 +16,9 @@ export default function ContactUs() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-gray-100 px-6 py-16">
+    
+
+    <section id='contact' className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-gray-100 px-6 py-16">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <motion.div
@@ -25,7 +27,7 @@ export default function ContactUs() {
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl font-extrabold text-indigo-500 mb-3">
+          <h1 className="text-4xl font-extrabold text-indigo-500 mb-3 ">
             Contact Us
           </h1>
           <p className="text-gray-400 max-w-2xl mx-auto">
@@ -123,6 +125,6 @@ export default function ContactUs() {
           </motion.form>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
