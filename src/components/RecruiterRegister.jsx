@@ -2,9 +2,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { User, Mail, MapPin, Lock, Building } from "lucide-react";
 import { Header } from "../LandingPage";
+import {motion, AnimatePresence} from "framer-motion";
+import { CheckCircle } from "lucide-react";
 
 export default function RecruiterRegister() {
   const navigate = useNavigate();
+    const [success, setSuccess] = useState(false);
   const [form, setForm] = useState({
     name: "",
     company: "",
@@ -26,20 +29,33 @@ export default function RecruiterRegister() {
     }
 
     console.log("Recruiter Data:", form);
-    navigate("/login");
+    setSuccess(true);
+    setTimeout(() => {
+      navigate("/login");
+    }, 2000);
   };
+
 
   return (
     <>
     <Header />
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-6">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white p-8 rounded-xl shadow-lg w-full max-w-lg space-y-4"
-      >
-        <h2 className="text-2xl font-bold text-center mb-4">
-          Recruiter Registration
-        </h2>
+       <AnimatePresence mode="wait">
+
+          {!success ? (
+            /* FORM */
+            <motion.form
+              key="form"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.4 }}
+              onSubmit={handleSubmit}
+              className="bg-white p-8 rounded-xl shadow-lg w-full max-w-lg space-y-4"
+            >
+              <h2 className="text-2xl font-bold text-center mb-4">
+                Job Recruiter Registration
+              </h2>
 
         <Input icon={User} name="name" placeholder="Full Name" onChange={handleChange} />
         <Input icon={Building} name="company" placeholder="Company Name (optional)" onChange={handleChange} />
@@ -51,20 +67,42 @@ export default function RecruiterRegister() {
         <button className="w-full bg-green-600 text-white py-3 rounded hover:bg-green-700">
           Submit
         </button>
-      </form>
-    </div>
+        </motion.form>
+          ) : (
+            /* SUCCESS */
+            <motion.div
+              key="success"
+              initial={{ scale: 0.6, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+              className="bg-white p-10 rounded-xl shadow-lg text-center"
+            >
+              <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
+              <h2 className="text-2xl font-bold text-gray-800 mb-2">
+                Registration Successful 🎉
+              </h2>
+              <p className="text-gray-600">
+                Redirecting you to login...
+              </p>
+            </motion.div>
+          )}
+
+        </AnimatePresence>
+      </div>
     </>
   );
 }
 
 function Input({ icon: Icon, ...props }) {
+  const isOptional = props.placeholder?.includes("optional");
+
   return (
     <div className="relative">
       <Icon className="absolute left-3 top-3 text-gray-400" />
       <input
         {...props}
-        required={!props.placeholder.includes("optional")}
-        className="w-full pl-10 py-2 border rounded"
+        required={!isOptional}
+        className="w-full pl-10 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
     </div>
   );
