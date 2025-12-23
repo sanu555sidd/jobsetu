@@ -22,6 +22,7 @@ export default function SeekerRegister() {
     location: "",
     experience: "",
     skills: "",
+    preferredLocation: "",
     password: "",
     aadhaar: "",
     otp: "",
@@ -30,30 +31,59 @@ export default function SeekerRegister() {
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+ const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    // basic validation
-    if (
-      !form.name ||
-      !form.email ||
-      !form.location ||
-      !form.experience ||
-      !form.skills ||
-      !form.password
-    ) {
-      alert("Please fill all required fields");
+  if (
+    !form.name ||
+    !form.email ||
+    !form.location ||
+    !form.experience ||
+    !form.preferredLocation ||
+    !form.skills ||
+    !form.password
+  ) {
+    alert("Please fill all required fields");
+    return;
+  }
+
+  try {
+    const res = await fetch("http://localhost:5000/api/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        role: "seeker",
+        fullName: form.name,          // ✅ FIXED
+        email: form.email,
+        password: form.password,
+        location: form.location,
+        experience: form.experience,
+        preferredLocation: form.preferredLocation,
+        skills: form.skills,
+        aadhaar: form.aadhaar,
+        otp: form.otp,
+      }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.message || "Registration failed");
       return;
     }
-
-    console.log("Seeker Data:", form);
 
     setSuccess(true);
 
     setTimeout(() => {
       navigate("/login");
     }, 2000);
-  };
+  } catch (error) {
+    alert("Server error");
+  }
+};
+
 
   return (
     <>
@@ -90,12 +120,12 @@ export default function SeekerRegister() {
                   required
                   className="w-full pl-10 py-2 border rounded"
                 >
-                  <option value="">Select Experience</option>
+                          <option value="">Select Experience Level</option>
                   <option value="fresher">Fresher</option>
                   <option value="experienced">Experienced</option>
                 </select>
               </div>
-
+              <Input icon={MapPin} name="preferredLocation" placeholder="Preferred Location" onChange={handleChange} />
               <Input icon={BadgeCheck} name="skills" placeholder="Skills (React, Node...)" onChange={handleChange} />
               <Input icon={Lock} name="password" type="password" placeholder="Password" onChange={handleChange} />
               <Input icon={BadgeCheck} name="aadhaar" placeholder="Aadhaar Number (optional)" onChange={handleChange} />

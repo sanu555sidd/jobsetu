@@ -20,20 +20,47 @@ export default function RecruiterRegister() {
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+ const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    if (!form.name || !form.location || !form.email || !form.password) {
-      alert("Please fill required fields");
+  if (!form.name || !form.location || !form.email || !form.password) {
+    alert("Please fill required fields");
+    return;
+  }
+
+  try {
+    const res = await fetch("http://localhost:5000/api/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        role: "recruiter",
+        fullName: form.name,           // ✅ FIXED
+        email: form.email,
+        password: form.password,
+        location: form.location,
+        companyName: form.company,     // ✅ FIXED
+        designation: form.designation,
+      }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.message || "Registration failed");
       return;
     }
 
-    console.log("Recruiter Data:", form);
     setSuccess(true);
+
     setTimeout(() => {
       navigate("/login");
     }, 2000);
-  };
+  } catch (error) {
+    alert("Server error");
+  }
+};
 
 
   return (
