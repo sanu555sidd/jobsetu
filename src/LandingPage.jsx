@@ -92,7 +92,7 @@ const Header = () => {
         </div>
       
       <nav className="hidden md:flex items-center space-x-8">
-        <a href="#" className="text-gray-600 hover:text-blue-600">Find Jobs</a>
+        <a href="#" className="text-gray-600 hover:text-blue-600">Home</a>
         <a href="#" className="text-gray-600 hover:text-blue-600">Post a Job</a>
         {/* <a href="#" className="text-gray-600 hover:text-blue-600">Conatct Us</a> */}
     <button onClick={() => document.getElementById("contact")?.scrollIntoView({
