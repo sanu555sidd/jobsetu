@@ -8,6 +8,7 @@ import {
   LogOut,
 } from "lucide-react";
 import { Header } from "../LandingPage";
+import RecruiterProfile from "./RecruiterProfile";
 
 export default function RecruiterDashboard() {
   const [activeTab, setActiveTab] = useState("post");
@@ -78,7 +79,7 @@ export default function RecruiterDashboard() {
           {activeTab === "jobs" && <MyJobs />}
           {activeTab === "applicants" && <Applicants />}
           {activeTab === "notifications" && <Notifications />}
-          {activeTab === "profile" && <MyProfile />}
+          {activeTab === "profile" && <RecruiterProfile />}
         </main>
       </div>
     </>
@@ -135,6 +136,7 @@ const Notifications = () => (
 const MyProfile = () => (
   <div className="bg-white p-6 rounded-xl shadow">
     <h2 className="text-2xl font-semibold mb-4">My Profile</h2>
+    
     <p>Edit your recruiter profile here.</p>
   </div>
 );

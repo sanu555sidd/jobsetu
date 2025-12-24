@@ -8,6 +8,7 @@ import {
   LogOut,
 } from "lucide-react";
 import { Header } from "../LandingPage";
+import SeekerProfile from "./Seekerprofile";
 
 export default function SeekerDashboard() {
   const [activeTab, setActiveTab] = useState("jobs");
@@ -76,7 +77,7 @@ export default function SeekerDashboard() {
           {activeTab === "applications" && <MyApplications />}
           {activeTab === "notifications" && <Notifications />}
           {activeTab === "saved" && <SavedJobs />}
-          {activeTab === "profile" && <MyProfile />}
+          {activeTab === "profile" && <SeekerProfile />}
         </main>
       </div>
     </>
